@@ -1,82 +1,41 @@
-// Tab switching
-const loginTab = document.getElementById('login-tab');
-const createAccountTab = document.getElementById('create-account-tab');
-const logonForm = document.getElementById('logon-form');
-const createAccountForm = document.getElementById('create-account-form');
-const messageEl = document.getElementById('message');
+// Show overlay, play door animation, then run the callback (e.g., redirect)
+function startDoorOpen(done) {
+  const overlay = document.getElementById('fridgeOverlay');
+  const door = document.getElementById('fridgeDoor');
 
-loginTab.addEventListener('click', () => {
-    logonForm.classList.add('active-form');
-    createAccountForm.classList.remove('active-form');
-    loginTab.classList.add('active');
-    createAccountTab.classList.remove('active');
-});
+  if (!overlay || !door) {
+    // If markup missing, just continue
+    if (typeof done === 'function') done();
+    return;
+  }
 
-createAccountTab.addEventListener('click', () => {
-    createAccountForm.classList.add('active-form');
-    logonForm.classList.remove('active-form');
-    createAccountTab.classList.add('active');
-    loginTab.classList.remove('active');
-});
+  // Make overlay visible
+  overlay.style.display = 'flex';
 
-// Logon form submission
-logonForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
+  // Force a reflow so the browser applies initial state before we add the class
+  // (This ensures the animation plays reliably)
+  void door.offsetWidth;
 
-    try {
-        const response = await fetch('/api/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password }),
-        });
+  // Add the opening class to start the keyframes
+  door.classList.add('is-opening');
 
-        const result = await response.json();
-        if (response.ok) {
-            localStorage.setItem('jwtToken', result.token);
-            window.location.href = '/dashboard';
-        } else {
-            messageEl.textContent = result.message;
-            messageEl.classList.add('error');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        messageEl.textContent = 'An error occurred. Please try again later.';
-        messageEl.classList.add('error');
+  // Safety timeout in case animationend doesn't fire for any reason
+  const durationMs = 1100; // match CSS 1.05s + a tiny buffer
+  let finished = false;
+  const fallback = setTimeout(() => {
+    if (!finished) {
+      finished = true;
+      if (typeof done === 'function') done();
     }
-});
+  }, durationMs);
 
-// Create account form submission
-createAccountForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const email = document.getElementById('create-email').value;
-    const password = document.getElementById('create-password').value;
+  const onEnd = () => {
+    if (finished) return;
+    finished = true;
+    clearTimeout(fallback);
+    door.removeEventListener('animationend', onEnd);
+    if (typeof done === 'function') done();
+  };
 
-    try {
-        const response = await fetch('/api/create-account', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password }),
-        });
-
-        const result = await response.json();
-        if (response.ok) {
-            messageEl.textContent = 'Account created successfully! You can now log in.';
-            messageEl.classList.add('success');
-            document.getElementById('login-email').value = email;
-            document.getElementById('login-password').value = password;
-            logonForm.classList.add('active-form');
-            createAccountForm.classList.remove('active-form');
-            loginTab.classList.add('active');
-            createAccountTab.classList.remove('active');
-        } else {
-            messageEl.textContent = result.message;
-            messageEl.classList.add('error');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        messageEl.textContent = 'An error occurred. Please try again later.';
-        messageEl.classList.add('error');
-    }
-});
+  door.addEventListener('animationend', onEnd, { once: true });
+}

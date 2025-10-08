@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Fridge Friend – Log In</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/css/door.css" />
+  <style>
+    /* Quick, minimal login page styles (keep or replace with yours) */
+    body { font-family: system-ui, Arial, sans-serif; margin:0; min-height:100dvh; display:grid; place-items:center; background:#f7f7f7; }
+    .card { width: 320px; background:#fff; border-radius:16px; box-shadow:0 10px 30px rgba(0,0,0,.08); padding:24px; }
+    .card h1 { margin:0 0 12px; font-size:22px; }
+    form label { display:block; font-size:14px; margin:12px 0 6px; }
+    form input { width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:14px; }
+    button { margin-top:16px; width:100%; padding:12px; border:0; border-radius:10px; font-weight:600; cursor:pointer; }
+    .btn { background:#2a7fff; color:#fff; }
+    .error { color:#b00020; font-size:13px; margin-top:8px; min-height:1em; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>Log in</h1>
+    <form id="loginForm">
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" autocomplete="username" required />
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required />
+      <button class="btn" type="submit">Sign in</button>
+      <div id="error" class="error"></div>
+    </form>
+  </div>
+
+  <!-- Fridge overlay (initially hidden; shown only after successful login) -->
+  <div id="fridgeOverlay" class="fridge-overlay" aria-hidden="true">
+    <div class="fridge-stage">
+      <div class="fridge-frame">
+        <!-- Optional badge/logo -->
+        <div class="brand">Fridge Friend</div>
+        <!-- The door that animates open -->
+        <div id="fridgeDoor" class="fridge-door">
+          <div class="handle" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/logon.js"></script>
+  <script src="/js/datamodel.js"></script>
+  <script>
+    // Wire up the form -> call login() in datamodel
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const err = document.getElementById('error');
+      err.textContent = '';
+
+      try {
+        await login(email, password, {
+          onSuccess: () => startDoorOpen(() => { window.location.href = '/dashboard.html'; }),
+          onError: (message) => { err.textContent = message || 'Login failed.'; }
+        });
+      } catch (ex) {
+        err.textContent = 'Something went wrong. Please try again.';
+      }
+    });
+  </script>
+</body>
+</html>
