@@ -159,7 +159,9 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
+
 // Route: Get All Email Addresses
+
 app.get('/api/users', authenticateToken, async (req, res) => {
     try {
         const connection = await createConnection();
@@ -173,6 +175,46 @@ app.get('/api/users', authenticateToken, async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error retrieving email addresses.' });
+    }
+});
+
+
+// Route: Add Inventory Item 
+
+app.post('/api/inventory', authenticateToken, async (req, res) => {
+    const { name, quantity, expiry_date, price, category } = req.body;
+    if (!name || !quantity || !expiry_date) {
+        return res.status(400).json({ message: 'Name, quantity, and expiry date are required.' });
+    }
+
+    try {
+        const connection = await createConnection();
+        const [result] = await connection.execute(
+            'INSERT INTO inventory (user_email, name, quantity, expiry_date, price, category) VALUES (?, ?, ?, ?, ?, ?)',
+            [req.user.email, name, quantity, expiry_date, price || null, category || null]
+        );
+        await connection.end();
+        res.status(201).json({ message: 'Item added successfully!', item_id: result.insertId });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error adding item.' });
+    }
+});
+
+
+// Route: Get User Inventory 
+app.get('/api/inventory', authenticateToken, async (req, res) => {
+    try {
+        const connection = await createConnection();
+        const [rows] = await connection.execute(
+            'SELECT item_id, name, quantity, expiry_date, price, category FROM inventory WHERE user_email = ? ORDER BY expiry_date ASC',
+            [req.user.email]
+        );
+        await connection.end();
+        res.status(200).json({ items: rows });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error retrieving inventory.' });
     }
 });
 //////////////////////////////////////
