@@ -8,39 +8,43 @@
     <link rel="stylesheet" href="/css/logon.css">
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+    <!-- Fridge Overlay for Animation -->
+    <div id="fridgeOverlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden" style="z-index: 1000;">
+        <div id="fridgeDoor" class="bg-white w-64 h-96 rounded-lg"></div>
+    </div>
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md relative" style="z-index: 10;">
         <h1 class="text-2xl font-bold text-center mb-6">Fridge Friend</h1>
         <div class="flex justify-around mb-6">
-            <button class="tab-button active px-4 py-2 rounded-t-lg" id="login-tab">Login</button>
-            <button class="tab-button px-4 py-2 rounded-t-lg" id="create-account-tab">Create Account</button>
+            <button class="tab-button active px-4 py-2 rounded-t-lg" id="login-tab" data-testid="login-tab">Login</button>
+            <button class="tab-button px-4 py-2 rounded-t-lg" id="create-account-tab" data-testid="create-account-tab">Create Account</button>
         </div>
         <div id="form-container">
-            <!-- Logon Form -->
+         <!-- Logon Form -->
+
             <form id="logon-form" class="active-form space-y-4">
                 <div>
                     <label for="login-email" class="block text-sm font-medium">Email</label>
-                    <input type="email" id="login-email" class="w-full p-2 border rounded" placeholder="Enter your email" required>
+                    <input type="email" id="login-email" class="w-full p-2 border rounded" placeholder="Enter your email" required data-testid="login-email">
                 </div>
                 <div>
                     <label for="login-password" class="block text-sm font-medium">Password</label>
-                    <input type="password" id="login-password" class="w-full p-2 border rounded" placeholder="Enter your password" required>
+                    <input type="password" id="login-password" class="w-full p-2 border rounded" placeholder="Enter your password" required data-testid="login-password">
                 </div>
-                <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Login</button>
+                <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700" data-testid="login-button">Login</button>
             </form>
-
             <!-- Create Account Form -->
-            <form id="create-account-form" class="space-y-4 hidden">
+            <form id="create-account-form" class="space-y-4 hidden" data-testid="create-account-form">
                 <div>
                     <label for="create-email" class="block text-sm font-medium">Email</label>
-                    <input type="email" id="create-email" class="w-full p-2 border rounded" placeholder="Enter your email" required>
+                    <input type="email" id="create-email" class="w-full p-2 border rounded" placeholder="Enter your email" required data-testid="create-email">
                 </div>
                 <div>
                     <label for="create-password" class="block text-sm font-medium">Password</label>
-                    <input type="password" id="create-password" class="w-full p-2 border rounded" placeholder="Create your password" required>
+                    <input type="password" id="create-password" class="w-full p-2 border rounded" placeholder="Create your password" required data-testid="create-password">
                 </div>
-                <button type="submit" class="w-full bg-green-600 text-white p-2 rounded hover:bg-green-700">Create Account</button>
+                <button type="submit" class="w-full bg-green-600 text-white p-2 rounded hover:bg-green-700" data-testid="create-account-button">Create Account</button>
             </form>
-            <p id="message" class="text-center text-sm mt-4"></p>
+            <p id="message" class="text-center text-sm mt-4" data-testid="message"></p>
         </div>
     </div>
     <script src="/js/logon.js"></script>
