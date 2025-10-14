@@ -1,38 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fridge Friend - Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fridge Friend - Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
 </head>
 <body class="bg-gray-100">
-    <header class="bg-blue-600 text-white p-4">
-        <h1 class="text-2xl font-bold">Fridge Friend</h1>
-        <nav class="mt-2">
-            <a href="/dashboard" class="text-white underline">Dashboard</a> |
-            <a href="/inventory" class="text-white">Inventory</a> |
-            <a href="/recipes" class="text-white">Recipes</a> |
-            <a href="/health" class="text-white">Health</a> |
-            <a href="/reports" class="text-white">Reports</a> |
-            <a href="/scan" class="text-white">Scan</a> |
-            <button id="logoutButton" class="text-white">Logout</button>
-        </nav>
-    </header>
-    <main class="container mx-auto p-4">
-        <h2 class="text-xl font-semibold mb-4">Welcome to Your Dashboard</h2>
-        <p class="mb-4">Overview of your fridge status and recent activity.</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="bg-white p-4 rounded shadow">
-                <h3 class="font-semibold">Expiring Soon</h3>
-                <ul id="expiringList" class="mt-2"></ul>
-            </div>
-            <div class="bg-white p-4 rounded shadow">
-                <h3 class="font-semibold">Recent Scans</h3>
-                <ul id="recentScans" class="mt-2"></ul>
-            </div>
-        </div>
-    </main>
-    <script src="/js/dashboard.js"></script>
+  <header class="bg-blue-600 text-white p-4">
+    <h1 class="text-2xl font-bold">Fridge Friend</h1>
+    <nav class="mt-2 space-x-2">
+      <a href="dashboard.html" class="text-white underline">Dashboard</a> |
+      <a href="inventory.html" class="text-white">Inventory</a> |
+      <a href="recipes.html" class="text-white">Recipes</a> |
+      <a href="health.html" class="text-white">Health</a> |
+      <a href="reports.html" class="text-white">Reports</a> |
+      <a href="scan.html" class="text-white">Scan</a> |
+      <button id="logoutButton" class="text-white">Logout</button>
+    </nav>
+  </header>
+
+  <main class="container mx-auto p-4">
+    <h2 class="text-xl font-semibold mb-4">Welcome to Your Dashboard</h2>
+    <p class="mb-4">Overview of your fridge status and recent activity.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="bg-white p-4 rounded shadow">
+        <h3 class="font-semibold">Expiring Soon</h3>
+        <ul id="expiringList" class="mt-2"></ul>
+      </div>
+      <div class="bg-white p-4 rounded shadow">
+        <h3 class="font-semibold">Recent Scans</h3>
+        <ul id="recentScans" class="mt-2"></ul>
+      </div>
+    </div>
+  </main>
+
+  <!-- auth token -->
+  <script src="js/auth.js"></script>
+  <!-- dash login  -->
+  <script src="js/dashboard.js"></script>
 </body>
 </html>
