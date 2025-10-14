@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fridge Friend - Recipes</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+  <header class="bg-blue-600 text-white p-4">
+    <h1 class="text-2xl font-bold">Fridge Friend</h1>
+    <nav class="mt-2 space-x-2">
+      <a href="dashboard.html" class="text-white">Dashboard</a> |
+      <a href="inventory.html" class="text-white">Inventory</a> |
+      <a href="recipes.html" class="text-white underline">Recipes</a> |
+      <a href="health.html" class="text-white">Health</a> |
+      <a href="reports.html" class="text-white">Reports</a> |
+      <a href="scan.html" class="text-white">Scan</a> |
+      <button id="logoutButton" class="text-white">Logout</button>
+    </nav>
+  </header>
+
+  <main class="container mx-auto p-4">
+    <h2 class="text-xl font-semibold mb-4">Recipes</h2>
+    <p class="mb-4">Find and manage your recipes here.</p>
+
+    <!-- Buttons -->
+    <div class="space-x-4">
+      <button
+        id="generateRecipesBtn"
+        class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded shadow"
+      >
+        Generate New Recipes
+      </button>
+
+      <button
+        id="viewRecipesBtn"
+        class="bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-2 px-4 rounded shadow"
+      >
+        View Saved Recipes
+      </button>
+    </div>
+  </main>
+
+  <script>
+    // Placeholder JavaScript for button clicks
+    document.getElementById('generateRecipesBtn').addEventListener('click', function () {
+      alert('Generating new recipes based on your inventory...');
+    });
+
+    document.getElementById('viewRecipesBtn').addEventListener('click', function () {
+      alert('Displaying your saved recipes...');
+    });
+  </script>
+</body>
+</html>
