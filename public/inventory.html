@@ -46,19 +46,59 @@
       <form id="addItemForm" class="space-y-4">
         <div>
           <label for="itemName" class="block text-sm font-medium">Name</label>
-          <input type="text" id="itemName" class="w-full p-2 border rounded" required>
+          <!-- Added by Louise: Large font for Name field -->
+          <input type="text" id="itemName" class="w-full p-2 border rounded text-lg" required>
         </div>
         <div>
-          <label for="itemServings" class="block text-sm font-medium">Servings</label>
-          <input type="number" id="itemServings" class="w-full p-2 border rounded" min="1" required>
-        </div>
-        <div>
-          <label for="itemQty" class="block text-sm font-medium">Qty</label>
-          <input type="number" id="itemQty" class="w-full p-2 border rounded" min="1" required>
+          <label for="itemDateAcquired" class="block text-sm font-medium">Date Acquired</label>
+          <!-- Added by Louise: Auto-populate today (2025-10-25), editable -->
+          <input type="date" id="itemDateAcquired" class="w-full p-2 border rounded" required>
         </div>
         <div>
           <label for="itemExpiration" class="block text-sm font-medium">Expiration Date</label>
+          <!-- Added by Louise: Expiration date field -->
           <input type="date" id="itemExpiration" class="w-full p-2 border rounded" required>
+        </div>
+        <div>
+          <label for="itemQuantity" class="block text-sm font-medium">Quantity</label>
+          <!-- Added by Louise: Quantity field -->
+          <input type="number" id="itemQuantity" class="w-full p-2 border rounded" min="1" required>
+        </div>
+        <div>
+          <label for="itemServingSize" class="block text-sm font-medium">Serving Size</label>
+          <!-- Added by Louise: Serving size field -->
+          <input type="text" id="itemServingSize" class="w-full p-2 border rounded" required>
+        </div>
+        <div>
+          <label for="itemServingsPerContainer" class="block text-sm font-medium">Servings per Container</label>
+          <!-- Added by Louise: Servings per container field -->
+          <input type="number" id="itemServingsPerContainer" class="w-full p-2 border rounded" min="1" required>
+        </div>
+        <!-- Added by Louise: Toggle for nutritional info -->
+        <div>
+          <button type="button" id="toggleNutrition" class="text-blue-600 hover:underline">Show Nutritional Info</button>
+          <div id="nutritionFields" class="hidden space-y-4">
+            <div>
+              <label for="itemCalories" class="block text-sm font-medium">Calories (kcal)</label>
+              <!-- Added by Louise: Calories field -->
+              <input type="number" id="itemCalories" class="w-full p-2 border rounded" min="0">
+            </div>
+            <div>
+              <label for="itemProtein" class="block text-sm font-medium">Protein (g)</label>
+              <!-- Added by Louise: Protein field -->
+              <input type="number" id="itemProtein" class="w-full p-2 border rounded" min="0" step="0.1">
+            </div>
+            <div>
+              <label for="itemCarbs" class="block text-sm font-medium">Carbs (g)</label>
+              <!-- Added by Louise: Carbs field -->
+              <input type="number" id="itemCarbs" class="w-full p-2 border rounded" min="0" step="0.1">
+            </div>
+            <div>
+              <label for="itemFat" class="block text-sm font-medium">Fat (g)</label>
+              <!-- Added by Louise: Fat field -->
+              <input type="number" id="itemFat" class="w-full p-2 border rounded" min="0" step="0.1">
+            </div>
+          </div>
         </div>
         <div class="flex justify-end space-x-2">
           <button type="button" id="cancelAdd" class="px-4 py-2 bg-gray-400 text-white rounded">Cancel</button>
@@ -75,19 +115,59 @@
       <form id="editItemForm" class="space-y-4">
         <div>
           <label for="editName" class="block text-sm font-medium">Name</label>
-          <input type="text" id="editName" class="w-full p-2 border rounded" required>
+          <!-- Added by Louise: Large font for Name field -->
+          <input type="text" id="editName" class="w-full p-2 border rounded text-lg" required>
         </div>
         <div>
-          <label for="editServings" class="block text-sm font-medium">Servings</label>
-          <input type="number" id="editServings" class="w-full p-2 border rounded" min="1" required>
-        </div>
-        <div>
-          <label for="editQty" class="block text-sm font-medium">Qty</label>
-          <input type="number" id="editQty" class="w-full p-2 border rounded" min="1" required>
+          <label for="editDateAcquired" class="block text-sm font-medium">Date Acquired</label>
+          <!-- Added by Louise: Editable date acquired field -->
+          <input type="date" id="editDateAcquired" class="w-full p-2 border rounded" required>
         </div>
         <div>
           <label for="editExpiration" class="block text-sm font-medium">Expiration Date</label>
+          <!-- Added by Louise: Expiration date field -->
           <input type="date" id="editExpiration" class="w-full p-2 border rounded" required>
+        </div>
+        <div>
+          <label for="editQuantity" class="block text-sm font-medium">Quantity</label>
+          <!-- Added by Louise: Quantity field -->
+          <input type="number" id="editQuantity" class="w-full p-2 border rounded" min="1" required>
+        </div>
+        <div>
+          <label for="editServingSize" class="block text-sm font-medium">Serving Size</label>
+          <!-- Added by Louise: Serving size field -->
+          <input type="text" id="editServingSize" class="w-full p-2 border rounded" required>
+        </div>
+        <div>
+          <label for="editServingsPerContainer" class="block text-sm font-medium">Servings per Container</label>
+          <!-- Added by Louise: Servings per container field -->
+          <input type="number" id="editServingsPerContainer" class="w-full p-2 border rounded" min="1" required>
+        </div>
+        <!-- Added by Louise: Toggle for nutritional info -->
+        <div>
+          <button type="button" id="editToggleNutrition" class="text-blue-600 hover:underline">Show Nutritional Info</button>
+          <div id="editNutritionFields" class="hidden space-y-4">
+            <div>
+              <label for="editCalories" class="block text-sm font-medium">Calories (kcal)</label>
+              <!-- Added by Louise: Calories field -->
+              <input type="number" id="editCalories" class="w-full p-2 border rounded" min="0">
+            </div>
+            <div>
+              <label for="editProtein" class="block text-sm font-medium">Protein (g)</label>
+              <!-- Added by Louise: Protein field -->
+              <input type="number" id="editProtein" class="w-full p-2 border rounded" min="0" step="0.1">
+            </div>
+            <div>
+              <label for="editCarbs" class="block text-sm font-medium">Carbs (g)</label>
+              <!-- Added by Louise: Carbs field -->
+              <input type="number" id="editCarbs" class="w-full p-2 border rounded" min="0" step="0.1">
+            </div>
+            <div>
+              <label for="editFat" class="block text-sm font-medium">Fat (g)</label>
+              <!-- Added by Louise: Fat field -->
+              <input type="number" id="editFat" class="w-full p-2 border rounded" min="0" step="0.1">
+            </div>
+          </div>
         </div>
         <div class="flex justify-end space-x-2">
           <button type="button" id="cancelEdit" class="px-4 py-2 bg-gray-400 text-white rounded">Cancel</button>
