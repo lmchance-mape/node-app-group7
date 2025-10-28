@@ -80,10 +80,13 @@ app.post('/api/create-account', async (req, res) => {
   try {
     const connection = await createConnection();
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    // ✅ Insert with notification_pref + created_at
     const [result] = await connection.execute(
-      'INSERT INTO user (email, password) VALUES (?, ?)',
-      [email, hashedPassword]
+      'INSERT INTO user (email, password, notification_pref, created_at) VALUES (?, ?, ?, NOW())',
+      [email, hashedPassword, 'email']
     );
+
     await connection.end();
     res.status(201).json({ message: 'Account created successfully!' });
   } catch (error) {
@@ -178,7 +181,7 @@ app.post('/api/inventory', authenticateToken, async (req, res) => {
 
     res.status(201).json({
       message: 'Item added successfully!',
-      item_id: result.insertId // new logic by Louise
+      item_id: result.insertId
     });
   } catch (error) {
     console.error(error);
@@ -208,7 +211,6 @@ app.get('/api/inventory', authenticateToken, async (req, res) => {
 
 // UPDATE ITEM
 app.put('/api/inventory/:id', authenticateToken, async (req, res) => {
-  // new logic by Louise: async MySQL update fix
   const itemId = req.params.id;
   const userEmail = req.user.email;
 
@@ -247,7 +249,6 @@ app.put('/api/inventory/:id', authenticateToken, async (req, res) => {
 
 // DELETE ITEM
 app.delete('/api/inventory/:id', authenticateToken, async (req, res) => {
-  // new logic by Louise: async MySQL delete fix
   const itemId = req.params.id;
   const userEmail = req.user.email;
 
