@@ -269,6 +269,39 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "/logon.html";
   });
 
-  // Initial render
-  renderInventory();
+// ====== Initial render (Load from backend) ======
+async function loadInventoryFromServer() {
+  const token = localStorage.getItem("jwtToken");
+  if (!token) {
+    console.warn("No token found — falling back to localStorage");
+    renderInventory();
+    return;
+  }
+
+  try {
+    const response = await fetch("/api/inventory", {
+      headers: { "Authorization": `Bearer ${token}` }
+    });
+
+    if (!response.ok) {
+      console.error("Failed to fetch inventory:", await response.text());
+      renderInventory();
+      return;
+    }
+
+    const data = await response.json();
+    console.log("Loaded items from MySQL:", data.items);
+
+    // Save to localStorage so edit/delete still work offline
+    localStorage.setItem("inventory", JSON.stringify(data.items));
+    renderInventory();
+  } catch (err) {
+    console.error("Error loading inventory:", err);
+    renderInventory();
+  }
+}
+
+// Load from server first
+loadInventoryFromServer();
+
 });
