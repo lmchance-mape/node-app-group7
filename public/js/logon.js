@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    users.push({ email, password }); // ⚠️ plain password for demo only
+    users.push({ email, password }); // plain password for demo only
     saveUsers(users);
 
 
